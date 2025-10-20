@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AuroraText } from "@/components/ui/aurora-text";
 import { GridBeams } from "@/components/ui/grid-beams";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
@@ -54,7 +55,9 @@ export default function Home() {
               democratizes AI context engineering for everyone.
             </p>
             <div className="animate-fade-up opacity-0 [animation-delay:1s] [animation-fill-mode:forwards]">
-              <InteractiveHoverButton>Start Building</InteractiveHoverButton>
+              <Link href="/login">
+                <InteractiveHoverButton>Start Building</InteractiveHoverButton>
+              </Link>
             </div>
           </div>
         </section>
