@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SidebarUserSection } from "@/components/layout/sidebar-user-section";
 import { cn } from "@/lib/utils";
 import type { Category, SortOption } from "@/types/ai-role";
 
@@ -51,58 +52,63 @@ export function CommunitySidebar({
   onSortChange,
 }: CommunitySidebarProps) {
   return (
-    <aside className="w-64 border-r border-border bg-card p-6 space-y-6">
-      {/* Search */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Search</label>
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input
-            placeholder="Search AI roles..."
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-9"
-          />
+    <aside className="w-64 border-r border-border bg-card p-6 flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto space-y-6">
+        {/* Search */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Search</label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Input
+              placeholder="Search AI roles..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="pl-9"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Sort */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Sort By</label>
-        <Select value={sortBy} onValueChange={onSortChange}>
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {sortOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
+        {/* Sort */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Sort By</label>
+          <Select value={sortBy} onValueChange={onSortChange}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {sortOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Categories */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Categories</label>
+          <div className="space-y-1">
+            {categories.map((category) => (
+              <button
+                key={category.value}
+                onClick={() => onCategoryChange(category.value)}
+                className={cn(
+                  "w-full text-left px-3 py-2 rounded-md text-sm transition-colors",
+                  selectedCategory === category.value
+                    ? "bg-primary text-primary-foreground font-medium"
+                    : "hover:bg-accent text-foreground"
+                )}
+              >
+                {category.label}
+              </button>
             ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Categories */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Categories</label>
-        <div className="space-y-1">
-          {categories.map((category) => (
-            <button
-              key={category.value}
-              onClick={() => onCategoryChange(category.value)}
-              className={cn(
-                "w-full text-left px-3 py-2 rounded-md text-sm transition-colors",
-                selectedCategory === category.value
-                  ? "bg-primary text-primary-foreground font-medium"
-                  : "hover:bg-accent text-foreground"
-              )}
-            >
-              {category.label}
-            </button>
-          ))}
+          </div>
         </div>
       </div>
+
+      {/* User Section */}
+      <SidebarUserSection />
     </aside>
   );
 }

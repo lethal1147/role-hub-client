@@ -5,6 +5,8 @@ import {
   OTPFormData,
   RegisterFormData,
 } from "@/lib/schemas/auth.schema";
+import { useAuth } from "@/contexts/auth-context";
+import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo, useState } from "react";
 import { AUTH_VIEW } from "../constants/login.constant";
 
@@ -33,29 +35,53 @@ export function LoginContextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { login, register: authRegister } = useAuth();
   const [view, setView] = useState<AUTH_VIEW>(AUTH_VIEW.login);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [registeredEmail, setRegisteredEmail] = useState("");
 
   //   Handlers
-  const handleLogin = useCallback((data: LoginFormData) => {
-    console.log("Login:", data);
-    // TODO: Implement login logic
+  const handleLogin = useCallback(async (data: LoginFormData) => {
+    try {
+      await login(data.email, data.password);
+      // Redirect to chat page after successful login
+      router.push("/chat");
+    } catch (error) {
+      console.error("Login failed:", error);
+      // TODO: Show error message to user
+    }
+  }, [login, router]);
+
+  const handleRegister = useCallback(async (data: RegisterFormData) => {
+    try {
+      setRegisteredEmail(data.email);
+      // Navigate to OTP view
+      setDirection(1);
+      setView(AUTH_VIEW.otp);
+      // TODO: Send OTP to email via API
+    } catch (error) {
+      console.error("Registration failed:", error);
+      // TODO: Show error message to user
+    }
   }, []);
 
-  const handleRegister = useCallback((data: RegisterFormData) => {
-    console.log("Register:", data);
-    setRegisteredEmail(data.email);
-    // TODO: Implement registration logic
-    // Navigate to OTP view
-    setDirection(1);
-    setView(AUTH_VIEW.otp);
-  }, []);
-
-  const handleOTPVerify = useCallback((data: OTPFormData) => {
-    console.log("OTP:", data);
-    // TODO: Implement OTP verification logic
-  }, []);
+  const handleOTPVerify = useCallback(async (data: OTPFormData) => {
+    try {
+      // TODO: Verify OTP via API
+      // After successful OTP verification, complete registration
+      await authRegister({
+        name: "User", // This should come from registration form
+        email: registeredEmail,
+        password: "", // This should come from registration form
+      });
+      // Redirect to chat page
+      router.push("/chat");
+    } catch (error) {
+      console.error("OTP verification failed:", error);
+      // TODO: Show error message to user
+    }
+  }, [authRegister, registeredEmail, router]);
 
   const handleSocialLogin = useCallback((provider: string) => {
     console.log("Social login:", provider);

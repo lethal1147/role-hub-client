@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { AuroraText } from "@/components/ui/aurora-text";
 import { GridBeams } from "@/components/ui/grid-beams";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { Particles } from "@/components/ui/particles";
-import { Navbar } from "../../shared/components";
 import { ProblemStatement } from "@/components/landing/problem-statement";
 import { SolutionOverview } from "@/components/landing/solution-overview";
 import { KeyFeatures } from "@/components/landing/key-features";
@@ -29,8 +27,6 @@ export default function Home() {
         gridFadeEnd={90}
         className="h-screen w-full"
       >
-        <Navbar />
-
         {/* Hero Section */}
         <section className="flex justify-center items-center h-screen pt-20 relative">
           <Particles

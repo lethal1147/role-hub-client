@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { CommunitySidebar } from "@/components/community/community-sidebar";
 import { AIRoleCard } from "@/components/community/ai-role-card";
 import { ViewToggle } from "@/components/community/view-toggle";
 import { AIRoleDetailModal } from "@/components/community/ai-role-detail-modal";
 import { mockAIRoles } from "@/data/mock-ai-roles";
+import { useAuth } from "@/contexts/auth-context";
 import type {
   AIRole,
   Category,
@@ -15,6 +17,8 @@ import type {
 import { cn } from "@/lib/utils";
 
 export default function CommunityPage() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
   const [sortBy, setSortBy] = useState<SortOption>("most-subscribed");
@@ -62,6 +66,12 @@ export default function CommunityPage() {
   }, [roles, searchQuery, selectedCategory, sortBy]);
 
   const handleSubscribe = (roleId: string) => {
+    // Check authentication before allowing subscription
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+
     setRoles((prevRoles) =>
       prevRoles.map((role) =>
         role.id === roleId
@@ -93,7 +103,7 @@ export default function CommunityPage() {
   };
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background pt-[73px]">
       {/* Sidebar */}
       <CommunitySidebar
         searchQuery={searchQuery}

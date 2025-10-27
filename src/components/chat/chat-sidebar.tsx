@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { ProfileDropdown } from "./profile-dropdown";
+import { SidebarUserSection } from "@/components/layout/sidebar-user-section";
 import { Plus, MessageSquare, X, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +35,7 @@ export function ChatSidebar({ isOpen, onClose }: ChatSidebarProps) {
 			{/* Overlay for mobile */}
 			{isOpen && (
 				<div
-					className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+					className="fixed top-[73px] left-0 right-0 bottom-0 bg-black/50 z-30 lg:hidden"
 					onClick={onClose}
 					onKeyDown={(e) => {
 						if (e.key === "Escape") onClose();
@@ -46,7 +46,7 @@ export function ChatSidebar({ isOpen, onClose }: ChatSidebarProps) {
 			{/* Sidebar */}
 			<aside
 				className={cn(
-					"fixed lg:relative inset-y-0 left-0 z-50 w-80 bg-card border-r border-border flex-shrink-0 transition-all duration-300",
+					"fixed lg:relative top-[73px] lg:top-0 bottom-0 left-0 z-40 w-80 bg-card border-r border-border flex-shrink-0 transition-all duration-300",
 					// Mobile: slide in/out
 					"lg:ml-0",
 					isOpen
@@ -135,13 +135,9 @@ export function ChatSidebar({ isOpen, onClose }: ChatSidebarProps) {
 
 					<Separator />
 
-					{/* Profile Dropdown */}
+					{/* User Section */}
 					<div className="p-4">
-						<ProfileDropdown
-							name="John Doe"
-							email="john.doe@example.com"
-							avatarUrl="https://github.com/shadcn.png"
-						/>
+						<SidebarUserSection />
 					</div>
 				</div>
 			</aside>
