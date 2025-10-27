@@ -2,10 +2,13 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 import { CommunitySidebar } from "@/components/community/community-sidebar";
 import { AIRoleCard } from "@/components/community/ai-role-card";
 import { ViewToggle } from "@/components/community/view-toggle";
 import { AIRoleDetailModal } from "@/components/community/ai-role-detail-modal";
+import { CreateRoleModal } from "@/components/community/create-role-modal";
+import { Button } from "@/components/ui/button";
 import { mockAIRoles } from "@/data/mock-ai-roles";
 import { useAuth } from "@/contexts/auth-context";
 import type {
@@ -24,6 +27,7 @@ export default function CommunityPage() {
   const [sortBy, setSortBy] = useState<SortOption>("most-subscribed");
   const [viewMode, setViewMode] = useState<ViewMode>("card");
   const [selectedRole, setSelectedRole] = useState<AIRole | null>(null);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   const [roles, setRoles] = useState(mockAIRoles);
 
   // Filter and sort roles
@@ -125,7 +129,15 @@ export default function CommunityPage() {
                 Discover and subscribe to AI roles created by the community
               </p>
             </div>
-            <ViewToggle view={viewMode} onViewChange={setViewMode} />
+            <div className="flex items-center gap-3">
+              {isAuthenticated && (
+                <Button onClick={() => setCreateModalOpen(true)}>
+                  <Plus className="size-4" />
+                  Create AI Role
+                </Button>
+              )}
+              <ViewToggle view={viewMode} onViewChange={setViewMode} />
+            </div>
           </div>
 
           {/* Results Count */}
@@ -173,6 +185,16 @@ export default function CommunityPage() {
         open={!!selectedRole}
         onOpenChange={(open) => !open && setSelectedRole(null)}
         onSubscribe={() => selectedRole && handleSubscribe(selectedRole.id)}
+      />
+
+      {/* Create Role Modal */}
+      <CreateRoleModal
+        open={createModalOpen}
+        onOpenChange={setCreateModalOpen}
+        onRoleCreated={(roleId) => {
+          console.log("Role created:", roleId);
+          // TODO: Add the new role to the roles list or refetch
+        }}
       />
     </div>
   );

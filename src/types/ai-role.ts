@@ -19,6 +19,8 @@ export type SortOption =
 
 export type ViewMode = "card" | "list";
 
+export type AIRoleStatus = "draft" | "published";
+
 export interface User {
   id: string;
   name: string;
@@ -41,4 +43,9 @@ export interface AIRole {
   updatedAt: Date;
   version?: string;
   isPlatformRole?: boolean; // true for default platform roles
+  isDraft: boolean; // true for draft roles
+  ownerId: string; // creator's user ID
+  context: string; // system prompt for the AI
+  responseFormat: string; // instructions for AI response formatting
+  status: AIRoleStatus; // draft or published
 }

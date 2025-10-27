@@ -42,16 +42,19 @@ export function LoginContextProvider({
   const [registeredEmail, setRegisteredEmail] = useState("");
 
   //   Handlers
-  const handleLogin = useCallback(async (data: LoginFormData) => {
-    try {
-      await login(data.email, data.password);
-      // Redirect to chat page after successful login
-      router.push("/chat");
-    } catch (error) {
-      console.error("Login failed:", error);
-      // TODO: Show error message to user
-    }
-  }, [login, router]);
+  const handleLogin = useCallback(
+    async (data: LoginFormData) => {
+      try {
+        await login(data.email, data.password);
+        // Redirect to chat page after successful login
+        router.push("/chat");
+      } catch (error) {
+        console.error("Login failed:", error);
+        // TODO: Show error message to user
+      }
+    },
+    [login, router]
+  );
 
   const handleRegister = useCallback(async (data: RegisterFormData) => {
     try {
@@ -66,22 +69,25 @@ export function LoginContextProvider({
     }
   }, []);
 
-  const handleOTPVerify = useCallback(async (data: OTPFormData) => {
-    try {
-      // TODO: Verify OTP via API
-      // After successful OTP verification, complete registration
-      await authRegister({
-        name: "User", // This should come from registration form
-        email: registeredEmail,
-        password: "", // This should come from registration form
-      });
-      // Redirect to chat page
-      router.push("/chat");
-    } catch (error) {
-      console.error("OTP verification failed:", error);
-      // TODO: Show error message to user
-    }
-  }, [authRegister, registeredEmail, router]);
+  const handleOTPVerify = useCallback(
+    async (data: OTPFormData) => {
+      try {
+        // TODO: Verify OTP via API
+        // After successful OTP verification, complete registration
+        await authRegister({
+          name: "User", // This should come from registration form
+          email: registeredEmail,
+          password: "", // This should come from registration form
+        });
+        // Redirect to chat page
+        router.push("/chat");
+      } catch (error) {
+        console.error("OTP verification failed:", error);
+        // TODO: Show error message to user
+      }
+    },
+    [authRegister, registeredEmail, router]
+  );
 
   const handleSocialLogin = useCallback((provider: string) => {
     console.log("Social login:", provider);

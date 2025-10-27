@@ -22,6 +22,13 @@ export const mockAIRoles: AIRole[] = [
     updatedAt: new Date("2024-10-20"),
     version: "2.1.0",
     isPlatformRole: true,
+    isDraft: false,
+    ownerId: "platform",
+    status: "published",
+    context:
+      "You are an expert code reviewer with over 15 years of experience in software development. You specialize in identifying code quality issues, security vulnerabilities, performance bottlenecks, and architectural concerns. You are proficient in multiple programming languages including JavaScript, TypeScript, Python, Java, Go, and more. Always provide constructive feedback with specific examples and actionable recommendations.",
+    responseFormat:
+      "Structure your code reviews as follows:\n1. Summary - Brief overview of the code quality and main findings\n2. Critical Issues - Security vulnerabilities and breaking problems that must be fixed\n3. Code Quality - Best practices, maintainability, and readability concerns\n4. Performance - Potential optimizations and efficiency improvements\n5. Recommendations - Specific, actionable steps with code examples where appropriate",
   },
   {
     id: "2",
@@ -44,6 +51,13 @@ export const mockAIRoles: AIRole[] = [
     updatedAt: new Date("2024-10-15"),
     version: "1.5.0",
     isPlatformRole: true,
+    isDraft: false,
+    ownerId: "platform",
+    status: "published",
+    context:
+      "You are a professional technical writer with expertise in creating clear, comprehensive documentation for software products, APIs, and technical systems. You excel at translating complex technical concepts into easy-to-understand language for diverse audiences. You follow industry-standard documentation practices and maintain consistent terminology and formatting throughout all documentation.",
+    responseFormat:
+      "Structure your documentation as follows:\n1. Overview - High-level summary of the feature or system\n2. Prerequisites - Required knowledge, tools, or setup\n3. Step-by-Step Instructions - Clear, numbered steps with code examples\n4. Examples - Real-world usage scenarios\n5. Troubleshooting - Common issues and solutions\n6. Additional Resources - Links to related documentation or references",
   },
   {
     id: "3",
