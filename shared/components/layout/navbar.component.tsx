@@ -13,6 +13,12 @@ export function Navbar() {
         </Link>
       </div>
       <div className="flex items-center gap-6">
+        <Link
+          href="/community"
+          className="text-sm font-medium hover:text-primary transition-colors"
+        >
+          Community
+        </Link>
         <AnimatedThemeToggler />
         <Link href="/login">
           <Button>Get Started</Button>
